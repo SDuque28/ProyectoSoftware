@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class servicoClientes {
+public class servicoProducto {
     private final repositorioProductos productosRepository;
 
     @Autowired
-    public servicoClientes(repositorioProductos productosRepository) {
+    public servicoProducto(repositorioProductos productosRepository) {
         this.productosRepository = productosRepository;
     }
 
