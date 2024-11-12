@@ -1,6 +1,6 @@
 package com.software.MyProyect.servicios;
 import com.software.MyProyect.modelos.Productos;
-import com.software.MyProyect.repositorios.repositorioProductos;
+import com.software.MyProyect.repositorios.repositorioProducto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,10 +8,10 @@ import java.util.List;
 
 @Service
 public class servicoProducto {
-    private final repositorioProductos productosRepository;
+    private final repositorioProducto productosRepository;
 
     @Autowired
-    public servicoProducto(repositorioProductos productosRepository) {
+    public servicoProducto(repositorioProducto productosRepository) {
         this.productosRepository = productosRepository;
     }
 
