@@ -25,4 +25,19 @@ public class controladorCliente {
     public List<Clientes> getAllClientes() {
         return clientesService.getAllClientes();
     }
+    
+    @GetMapping("/{id}")
+    public Clientes getClienteById(@PathVariable String id) {
+        return clientesService.getClienteById(id);
+    }
+    
+    @PutMapping("/{id}")
+    public Clientes updateCliente(@PathVariable String id, @RequestBody Clientes cliente) {
+        return clientesService.updateCliente(id, cliente);
+    }
+    
+    @DeleteMapping("/{id}")
+    public void deleteCliente(@PathVariable String id) {
+        clientesService.deleteCliente(id);
+    }
 }
