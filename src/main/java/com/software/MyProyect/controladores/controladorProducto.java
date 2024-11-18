@@ -1,8 +1,8 @@
 package com.software.MyProyect.controladores;
-import com.software.MyProyect.modelos.Productos;
-import com.software.MyProyect.servicios.servicioProducto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.software.MyProyect.servicios.servicioProducto;
+import com.software.MyProyect.modelos.Productos;
 
 import java.util.List;
 
@@ -27,17 +27,17 @@ public class controladorProducto {
     public List<Productos> getAllProductos() {
         return productosService.getAllProductos();
     }
-    
+
      @GetMapping("/{id}")
     public Productos getProductoById(@PathVariable String id) {
         return productosService.getProductoById(id);
     }
-    
+
     @PutMapping("/{id}")
     public Productos updateProducto(@PathVariable String id, @RequestBody Productos producto) {
         return productosService.updateProducto(id, producto);
     }
-    
+
     @DeleteMapping("/{id}")
     public void deleteProductos(@PathVariable String id) {
         productosService.deleteProducto(id);
