@@ -27,6 +27,9 @@ public class Productos {
     }
 
     public void setCodigo(String codigo) {
+        if (codigo == null || codigo.trim().isEmpty()) {
+            throw new IllegalArgumentException("El código no puede estar vacío.");
+        }
         this.codigo = codigo;
     }
 
@@ -43,6 +46,9 @@ public class Productos {
     }
 
     public void setPrecioVenta(double precioVenta) {
+        if (precioVenta <= 0) {
+            throw new IllegalArgumentException("El precio de venta debe ser mayor a 0.");
+        }
         this.precioVenta = precioVenta;
     }
 

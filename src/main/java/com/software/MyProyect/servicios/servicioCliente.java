@@ -3,9 +3,9 @@ import com.software.MyProyect.modelos.Clientes;
 import com.software.MyProyect.repositorios.repositorioCliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class servicioCliente {
@@ -24,16 +24,36 @@ public class servicioCliente {
         return clientesRepository.findAll();
     }
 
-    public Optional<Clientes> getClienteById(String id) {
-        return clientesRepository.findById(id);
+    public Clientes getClienteById(String id) {
+        Optional<Clientes> cliente = clientesRepository.findById(id);
+        if (cliente.isPresent()) {
+            return cliente.get();
+        } else {
+            throw new IllegalArgumentException("Cliente con ID " + id + " no encontrado.");
+        }
     }
 
-    public Clientes updateCliente(String id, Clientes cliente) {
-        cliente.setId(id);
-        return clientesRepository.save(cliente);
+    public Clientes updateCliente(String id, Clientes clienteActualizado) {
+        Clientes clienteExistente = clientesRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Cliente con ID " + id + " no encontrado."));
+
+        // Actualizar los campos del cliente
+        clienteExistente.setNombre(clienteActualizado.getNombre());
+        clienteExistente.setNumeroDocumento(clienteActualizado.getNumeroDocumento());
+        clienteExistente.setDireccion(clienteActualizado.getDireccion());
+        clienteExistente.setTelefono(clienteActualizado.getTelefono());
+        clienteExistente.setEmail(clienteActualizado.getEmail());
+        clienteExistente.setCiudad(clienteActualizado.getCiudad());
+        clienteExistente.setDepartamento(clienteActualizado.getDepartamento());
+
+        return clientesRepository.save(clienteExistente);
     }
 
     public void deleteCliente(String id) {
+        if (!clientesRepository.existsById(id)) {
+            throw new IllegalArgumentException("Cliente con ID " + id + " no encontrado.");
+        }
+
         clientesRepository.deleteById(id);
     }
 }
