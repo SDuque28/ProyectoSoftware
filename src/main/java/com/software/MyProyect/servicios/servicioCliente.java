@@ -3,6 +3,7 @@ import com.software.MyProyect.modelos.Clientes;
 import com.software.MyProyect.repositorios.repositorioCliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import java.util.List;
 
@@ -21,5 +22,18 @@ public class servicioCliente {
 
     public List<Clientes> getAllClientes() {
         return clientesRepository.findAll();
+    }
+
+    public Optional<Clientes> getClienteById(String id) {
+        return clientesRepository.findById(id);
+    }
+
+    public Clientes updateCliente(String id, Clientes cliente) {
+        cliente.setId(id);
+        return clientesRepository.save(cliente);
+    }
+
+    public void deleteCliente(String id) {
+        clientesRepository.deleteById(id);
     }
 }
