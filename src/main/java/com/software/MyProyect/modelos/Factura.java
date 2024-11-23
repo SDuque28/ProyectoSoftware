@@ -3,6 +3,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Document(collection = "facturas")
 public class Factura {
@@ -16,10 +17,18 @@ public class Factura {
     private String estado;
     private String idCliente;
     private String idMetodoPago;
+    private List<ProductoFactura> productosVendidos;
 
-    // Getters and setters
     public String getId() {
         return id;
+    }
+
+    public List<ProductoFactura> getProductosVendidos() {
+        return productosVendidos;
+    }
+
+    public void setProductosVendidos(List<ProductoFactura> productosVendidos) {
+        this.productosVendidos = productosVendidos;
     }
 
     public void setId(String id) {
