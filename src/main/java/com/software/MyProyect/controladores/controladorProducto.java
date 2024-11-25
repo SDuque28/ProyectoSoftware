@@ -28,7 +28,7 @@ public class controladorProducto {
         return productosService.getAllProductos();
     }
 
-     @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public Productos getProductoById(@PathVariable String id) {
         return productosService.getProductoById(id);
     }
@@ -41,5 +41,15 @@ public class controladorProducto {
     @DeleteMapping("/{id}")
     public void deleteProductos(@PathVariable String id) {
         productosService.deleteProducto(id);
+    }
+
+    @GetMapping("/categoria/{categoria}")
+    public List<Productos> obtenerProductosPorCategoria(@PathVariable String categoria) {
+        return productosService.obtenerProductosPorCategoria(categoria);
+    }
+
+    @GetMapping("/buscar")
+    public List<Productos> buscarPorCualquierCriterio(@RequestParam String keyword) {
+        return productosService.buscarPorCualquierCriterio(keyword);
     }
 }
