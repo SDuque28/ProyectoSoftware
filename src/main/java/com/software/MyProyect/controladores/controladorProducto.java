@@ -1,4 +1,5 @@
 package com.software.MyProyect.controladores;
+
 import com.software.MyProyect.modelos.Productos;
 import com.software.MyProyect.servicios.servicioProducto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,30 +17,55 @@ public class controladorProducto {
         this.productosService = productosService;
     }
 
-    // Endpoint to add a new product
+    // Endpoint para agregar un nuevo producto
     @PostMapping("/add")
     public Productos addProducto(@RequestBody Productos producto) {
         return productosService.saveProducto(producto);
     }
 
-    // Endpoint to get all products
+    // Endpoint para obtener todos los productos
     @GetMapping("/all")
     public List<Productos> getAllProductos() {
         return productosService.getAllProductos();
     }
-    
-     @GetMapping("/{id}")
+
+    // Endpoint para obtener un producto por ID
+    @GetMapping("/{id}")
     public Productos getProductoById(@PathVariable String id) {
         return productosService.getProductoById(id);
     }
-    
+
+    // Endpoint para actualizar un producto
     @PutMapping("/{id}")
     public Productos updateProducto(@PathVariable String id, @RequestBody Productos producto) {
         return productosService.updateProducto(id, producto);
     }
-    
+
+    // Endpoint para eliminar un producto
     @DeleteMapping("/{id}")
     public void deleteProductos(@PathVariable String id) {
         productosService.deleteProducto(id);
     }
+    //Endpoint para buscar producto por nombre
+    @GetMapping("/buscar/nombre/{nombre")
+    public List<Productos> buscarPorNombre(@PathVariable String nombre){
+        return productosService.buscarProductosPorNombre(nombre);
+    }
+
+    //EndPoint para buscar producto por codigo
+    @GetMapping("/buscar/codigo/{codigo}")
+    public List<Productos> buscarPorCodigo(@PathVariable String codigo){
+        return productosService.buscarProductosPorCodigo(codigo);
+    }
+
+    @GetMapping("/buscar/categoria/{categoriaId}")
+    public List<Productos> buscarPorCategoria(@PathVariable String categoriaId){
+        return productosService.buscarProductosPorCategoria(categoriaId);
+    }
+
+    @PutMapping("/{id}/agregar-stock")
+    public Productos agregarStock(@PathVariable String id, @RequestParam int cantidad){
+        return productosService.agregarStock(id, cantidad);
+    }
+
 }
