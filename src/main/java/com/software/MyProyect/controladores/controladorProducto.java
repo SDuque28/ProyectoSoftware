@@ -68,4 +68,9 @@ public class controladorProducto {
         return productosService.agregarStock(id, cantidad);
     }
 
+    // Endpoint para obtener productos por categoría
+    @GetMapping("/categoria/{categoria}")
+    public List<Productos> obtenerProductosPorCategoria(@PathVariable String categoria) {
+        return productosService.obtenerProductosPorCategoria(categoria);
+    }
 }

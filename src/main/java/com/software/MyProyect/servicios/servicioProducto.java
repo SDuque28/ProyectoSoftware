@@ -1,4 +1,5 @@
 package com.software.MyProyect.servicios;
+import com.software.MyProyect.modelos.CategoriaManager;
 import com.software.MyProyect.modelos.Productos;
 import com.software.MyProyect.repositorios.repositorioProducto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,12 @@ import java.util.Optional;
 @Service
 public class servicioProducto {
     private final repositorioProducto productosRepository;
+    private final CategoriaManager categoriaManager;
 
     @Autowired
     public servicioProducto(repositorioProducto productosRepository) {
         this.productosRepository = productosRepository;
+        this.categoriaManager = new CategoriaManager();
     }
 
     public Productos saveProducto(Productos producto) {
@@ -74,5 +77,11 @@ public class servicioProducto {
 
         productoExistente.setStock(productoExistente.getStock() + cantidad);
         return productosRepository.save(productoExistente);
+    }
+
+    // Método para obtener productos por categoría
+    public List<Productos> obtenerProductosPorCategoria(String categoria) {
+        List<Productos> productos = productosRepository.findAll();
+        return categoriaManager.filtrarPorCategoria(productos, categoria);
     }
 }
