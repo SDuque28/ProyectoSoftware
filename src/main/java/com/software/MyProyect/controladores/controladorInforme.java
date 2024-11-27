@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.software.MyProyect.modelos.Factura;
-import com.software.MyProyect.servicios.ExportadorFactory;
-import com.software.MyProyect.servicios.ExportadorInforme;
+import com.software.MyProyect.utils.ExportadorFactory;
+import com.software.MyProyect.utils.ExportadorInforme;
 
 @RestController
 @RequestMapping("/api/informes")

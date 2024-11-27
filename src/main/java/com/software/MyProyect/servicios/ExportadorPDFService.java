@@ -1,5 +1,6 @@
 package com.software.MyProyect.servicios;
 
+import com.software.MyProyect.utils.ExportadorInforme;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.software.MyProyect.modelos.Factura;
 import com.software.MyProyect.modelos.ProductoFactura;

@@ -1,5 +1,7 @@
-package com.software.MyProyect.servicios;
+package com.software.MyProyect.utils;
 
+import com.software.MyProyect.servicios.ExportadorExcelService;
+import com.software.MyProyect.servicios.ExportadorPDFService;
 import org.springframework.stereotype.Component;
 
 @Component
