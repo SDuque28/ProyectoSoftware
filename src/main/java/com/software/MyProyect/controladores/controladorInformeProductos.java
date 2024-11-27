@@ -1,25 +1,36 @@
 package com.software.MyProyect.controladores;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.software.MyProyect.servicios.InformeProductosService;
+import com.software.MyProyect.utils.HttpResponseBuilder;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.software.MyProyect.modelos.Factura;
-import com.software.MyProyect.servicios.GeneradorInformeProductosImpl;
-import com.software.MyProyect.utils.ExportadorInformeProductos;
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/informes")
+@RequestMapping("/api/informes/productos")
 public class controladorInformeProductos {
 
-    @Autowired
-    private GeneradorInformeProductosImpl generadorInformeProductos;
+    private final InformeProductosService informeProductosService;
 
-    @Autowired
-    private ExportadorInformeProductos exportadorInformeProductos;
+    public controladorInformeProductos(InformeProductosService informeProductosService) {
+        this.informeProductosService = informeProductosService;
+    }
 
+    /**
+     * Genera un informe en PDF del Top 10 de productos más vendidos.
+     * @return El archivo PDF como respuesta.
+     */
+    @GetMapping("/top10")
+    public ResponseEntity<byte[]> generarInformeTop10() {
+        try {
+            byte[] pdfBytes = informeProductosService.generarPDFTop10();
+            return HttpResponseBuilder.crearRespuestaConArchivo(pdfBytes, "Top10_Productos.pdf", "application/pdf");
+        } catch (Exception e) {
+            return HttpResponseBuilder.crearRespuestaConError("Error al generar el informe: " + e.getMessage());
+        }
+    }
 }
