@@ -9,6 +9,12 @@ public class MetodoPago {
     private String descripcion;  // Description of the payment method (e.g., "Credit Card", "Cash", etc.)
     private String identificador;  // Unique identifier for the payment method (e.g., "VISA", "MasterCard", "CASH")
 
+    public MetodoPago(String id, String descripcion, String identificador) {
+        this.id = id;
+        this.descripcion = descripcion;
+        this.identificador = identificador;
+    }
+
     // Getters and setters
     public String getId() {
         return id;

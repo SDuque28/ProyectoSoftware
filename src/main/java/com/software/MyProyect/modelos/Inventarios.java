@@ -13,6 +13,16 @@ public class Inventarios {
     private String observaciones;
     private String idProducto;
 
+    public Inventarios(String id, String fecha, String tipoMovimiento, double entrada, double salida, String observaciones, String idProducto) {
+        this.id = id;
+        this.fecha = fecha;
+        this.tipoMovimiento = tipoMovimiento;
+        this.entrada = entrada;
+        this.salida = salida;
+        this.observaciones = observaciones;
+        this.idProducto = idProducto;
+    }
+
     // Getters and setters
     public String getId() {
         return id;

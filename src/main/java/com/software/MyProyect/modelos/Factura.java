@@ -1,4 +1,8 @@
 package com.software.MyProyect.modelos;
+
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -6,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@XmlRootElement(name = "Factura")
 @Document(collection = "facturas")
 public class Factura {
     @Id
@@ -33,11 +38,16 @@ public class Factura {
         productosVendidos = new ArrayList<ProductoFactura>();
     }
 
-    // Getters and setters
+    public Factura() {
+        productosVendidos = new ArrayList<>();
+    }
+
+    @XmlElement
     public String getId() {
         return id;
     }
 
+    @XmlElement
     public List<ProductoFactura> getProductosVendidos() {
         return productosVendidos;
     }
@@ -50,6 +60,7 @@ public class Factura {
         this.id = id;
     }
 
+    @XmlElement
     public String getCodigo() {
         return codigo;
     }
@@ -58,6 +69,7 @@ public class Factura {
         this.codigo = codigo;
     }
 
+    @XmlElement
     public LocalDate getFecha() {
         return fecha;
     }
@@ -66,6 +78,7 @@ public class Factura {
         this.fecha = fecha;
     }
 
+    @XmlElement
     public double getSubtotal() {
         return subtotal;
     }
@@ -74,6 +87,7 @@ public class Factura {
         this.subtotal = subtotal;
     }
 
+    @XmlElement
     public double getTotalImpuestos() {
         return totalImpuestos;
     }
@@ -82,6 +96,7 @@ public class Factura {
         this.totalImpuestos = totalImpuestos;
     }
 
+    @XmlElement
     public double getTotal() {
         return total;
     }
@@ -90,6 +105,7 @@ public class Factura {
         this.total = total;
     }
 
+    @XmlElement
     public String getEstado() {
         return estado;
     }
@@ -98,6 +114,7 @@ public class Factura {
         this.estado = estado;
     }
 
+    @XmlElement
     public String getIdCliente() {
         return idCliente;
     }
@@ -106,6 +123,7 @@ public class Factura {
         this.idCliente = idCliente;
     }
 
+    @XmlElement
     public String getIdMetodoPago() {
         return idMetodoPago;
     }
@@ -113,5 +131,4 @@ public class Factura {
     public void setIdMetodoPago(String idMetodoPago) {
         this.idMetodoPago = idMetodoPago;
     }
-
 }

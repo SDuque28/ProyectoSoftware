@@ -21,13 +21,29 @@ class ClienteTest {
     }
 
     @Test
-    void testModificarCliente() {
+    void testModificarDireccionCliente() {
+        Clientes cliente = new Clientes("1", "12345678", "Juan Perez", "Calle 123", "3001234567", "juan@mail.com", "Bogotá", "Cundinamarca");
+
+        cliente.setDireccion("Calle 456");
+
+        assertEquals("Calle 456", cliente.getDireccion());
+    }
+
+    @Test
+    void testModificarNombreCliente() {
         Clientes cliente = new Clientes("1", "12345678", "Juan Perez", "Calle 123", "3001234567", "juan@mail.com", "Bogotá", "Cundinamarca");
 
         cliente.setNombre("Carlos Lopez");
-        cliente.setDireccion("Calle 456");
 
         assertEquals("Carlos Lopez", cliente.getNombre());
-        assertEquals("Calle 456", cliente.getDireccion());
+    }
+
+    @Test
+    void testModificarEmailCliente() {
+        Clientes cliente = new Clientes("1", "12345678", "Juan Perez", "Calle 123", "3001234567", "juan@mail.com", "Bogotá", "Cundinamarca");
+
+        cliente.setEmail("example@gmail.com");
+
+        assertEquals("example@gmail.com", cliente.getEmail());
     }
 }
