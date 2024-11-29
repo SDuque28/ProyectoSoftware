@@ -1,4 +1,4 @@
-package com.software.MyProyect.ModelosTest;
+package com.software.MyProyect.ServiciosTest;
 
 import com.software.MyProyect.modelos.Clientes;
 import com.software.MyProyect.servicios.servicioCliente;

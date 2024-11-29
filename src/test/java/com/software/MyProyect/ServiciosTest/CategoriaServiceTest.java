@@ -1,12 +1,10 @@
-package com.software.MyProyect.ModelosTest;
+package com.software.MyProyect.ServiciosTest;
 
 import com.software.MyProyect.modelos.Categorias;
 import com.software.MyProyect.repositorios.repositorioCategoria;
 import com.software.MyProyect.servicios.servicioCategoria;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

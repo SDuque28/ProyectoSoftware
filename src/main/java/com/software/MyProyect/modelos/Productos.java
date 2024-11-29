@@ -15,6 +15,18 @@ public class Productos {
     private String categoriaId;
     private int stock;
 
+    public Productos(String id, String codigo, String nombre, double precioVenta, String descripcion, String medida, String impuestoId, String categoriaId, int stock) {
+        this.id = id;
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precioVenta = precioVenta;
+        this.medida = medida;
+        this.impuestoId = impuestoId;
+        this.categoriaId = categoriaId;
+        this.stock = stock;
+    }
+
     // Getters and setters
     public String getId() {
         return id;

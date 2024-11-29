@@ -45,11 +45,14 @@ public class servicioImpuesto {
         return impuestoRepository.save(impuestos1);
     }
 
-    public void deleteImpuesto(String id) {
+    public boolean deleteImpuesto(String id) {
+        boolean respuesta = true;
         if (!impuestoRepository.existsById(id)) {
-            throw new IllegalArgumentException("Impuesto con ID " + id + " no encontrado.");
+            System.out.println("Impuesto con ID " + id + " no encontrado.");
+            respuesta = false;
         }
 
         impuestoRepository.deleteById(id);
+        return respuesta;
     }
 }

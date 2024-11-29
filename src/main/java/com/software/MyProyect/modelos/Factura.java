@@ -18,6 +18,18 @@ public class Factura {
     private String idCliente;
     private String idMetodoPago;
 
+    public Factura(String id, String codigo, LocalDate fecha, double subtotal, double totalImpuestos, double total, String estado, String idCliente, String idMetodoPago) {
+        this.id = id;
+        this.codigo = codigo;
+        this.fecha = fecha;
+        this.subtotal = subtotal;
+        this.totalImpuestos = totalImpuestos;
+        this.total = total;
+        this.estado = estado;
+        this.idCliente = idCliente;
+        this.idMetodoPago = idMetodoPago;
+    }
+
     // Getters and setters
     public String getId() {
         return id;

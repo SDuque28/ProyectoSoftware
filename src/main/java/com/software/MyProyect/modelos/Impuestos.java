@@ -9,7 +9,12 @@ public class Impuestos {
     private String nombre;
     private double porcentaje;
 
-    // Getters and setters
+    public Impuestos(String id, String nombre, double porcentaje) {
+        this.id = id;
+        this.nombre = nombre;
+        this.porcentaje = porcentaje;
+    }
+
     public String getId() {
         return id;
     }

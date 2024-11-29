@@ -49,12 +49,15 @@ public class servicioProducto {
         return productosRepository.save(productoExistente);
     }
     
-    public void deleteProducto(String id) {
+    public boolean deleteProducto(String id) {
+        boolean resultado = true;
         if (!productosRepository.existsById(id)) {
-            throw new IllegalArgumentException("Producto con ID " + id + " no encontrado.");
+            System.out.println("Producto con ID " + id + " no encontrado.");
+            resultado = false;
         }
         
         productosRepository.deleteById(id);
+        return resultado;
     }
 
     public List<Productos> obtenerProductosPorCategoria(String categoria) {
@@ -74,6 +77,7 @@ public class servicioProducto {
     public List<Productos> buscarProductosPorCodigo(String codigo){
         return productosRepository.findByCodigo(codigo);
     }
+
     public List<Productos> buscarProductosPorCategoria(String categoriaId){
         return productosRepository.findByCategoriaId(categoriaId);
     }
@@ -82,7 +86,7 @@ public class servicioProducto {
             throw new IllegalArgumentException("La cantidad a agregar debe ser mayor a 0");
         }
         Productos productoExistente = productosRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Producto con ID "+ id + " no encontrado. "));
+                .orElseThrow(() -> new IllegalArgumentException("Producto con ID "+ id + " no encontrado."));
 
         productoExistente.setStock(productoExistente.getStock() + cantidad);
         return productosRepository.save(productoExistente);
