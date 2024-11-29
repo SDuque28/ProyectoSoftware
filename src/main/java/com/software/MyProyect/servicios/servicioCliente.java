@@ -49,11 +49,14 @@ public class servicioCliente {
         return clientesRepository.save(clienteExistente);
     }
 
-    public void deleteCliente(String id) {
+    public boolean deleteCliente(String id) {
+        boolean resultado = false;
         if (!clientesRepository.existsById(id)) {
-            throw new IllegalArgumentException("Cliente con ID " + id + " no encontrado.");
+            System.out.println("Cliente con ID " + id + " no encontrado.");
+        }else {
+            resultado = true;
         }
-
         clientesRepository.deleteById(id);
+        return resultado;
     }
 }

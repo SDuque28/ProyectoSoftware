@@ -14,6 +14,17 @@ public class Clientes {
     private String ciudad;
     private String departamento;
 
+    public Clientes(String numeroDocumento, String id, String nombre, String direccion, String telefono, String email, String ciudad, String departamento) {
+        this.numeroDocumento = numeroDocumento;
+        this.id = id;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.email = email;
+        this.ciudad = ciudad;
+        this.departamento = departamento;
+    }
+
     // Getters and setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
