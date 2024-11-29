@@ -27,6 +27,8 @@ public class Productos {
         this.stock = stock;
     }
 
+    public Productos(){}
+
     // Getters and setters
     public String getId() {
         return id;
