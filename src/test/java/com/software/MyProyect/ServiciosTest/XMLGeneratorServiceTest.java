@@ -1,119 +1,112 @@
 package com.software.MyProyect.ServiciosTest;
 
 import com.software.MyProyect.modelos.Factura;
-import com.software.MyProyect.repositorios.repositorioFactura;
 import com.software.MyProyect.servicios.XMLGeneratorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class XMLGeneratorServiceTest {
 
-    @Mock
-    private repositorioFactura facturaRepository;
-
-    @InjectMocks
     private XMLGeneratorService xmlGeneratorService;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        xmlGeneratorService = new XMLGeneratorService();
     }
 
-    // Tests para generarXMLFactura
     @Test
-    void testGenerarXMLFactura_NoEsNulo() throws Exception {
+    void testExportar_NoEsNulo() {
         // Arrange
-        Factura factura = new Factura(
-                "1", "F-123", LocalDate.of(2024, 11, 11),
-                4500.0, 500.0, 5000.0,
-                "Pagada", "Cliente-1", "MetodoPago-1"
-        );
-        when(facturaRepository.findById("1")).thenReturn(Optional.of(factura));
+        Factura factura1 = new Factura("1", "F-123", LocalDate.of(2024, 11, 11),
+                4500.0, 500.0, 5000.0, "Pagada", "Cliente-1", "MetodoPago-1");
+        Factura factura2 = new Factura("2", "F-124", LocalDate.of(2024, 11, 12),
+                3000.0, 300.0, 3300.0, "Pendiente", "Cliente-2", "MetodoPago-2");
+
+        List<Factura> facturas = List.of(factura1, factura2);
 
         // Act
-        String xmlResult = xmlGeneratorService.generarXMLFactura("1");
+        byte[] xmlBytes = xmlGeneratorService.exportar(facturas);
 
         // Assert
-        assertNotNull(xmlResult);
+        assertNotNull(xmlBytes);
     }
 
     @Test
-    void testGenerarXMLFactura_ContieneEtiquetaFactura() throws Exception {
+    void testExportar_ContieneRaizFacturas() {
         // Arrange
-        Factura factura = new Factura(
-                "1", "F-123", LocalDate.of(2024, 11, 11),
-                4500.0, 500.0, 5000.0,
-                "Pagada", "Cliente-1", "MetodoPago-1"
-        );
-        when(facturaRepository.findById("1")).thenReturn(Optional.of(factura));
+        Factura factura1 = new Factura("1", "F-123", LocalDate.of(2024, 11, 11),
+                4500.0, 500.0, 5000.0, "Pagada", "Cliente-1", "MetodoPago-1");
+
+        List<Factura> facturas = List.of(factura1);
 
         // Act
-        String xmlResult = xmlGeneratorService.generarXMLFactura("1");
+        byte[] xmlBytes = xmlGeneratorService.exportar(facturas);
+        String xmlContent = new String(xmlBytes);
 
         // Assert
-        assertTrue(xmlResult.contains("<Factura>"));
+        assertTrue(xmlContent.contains("<Facturas>"));
+        assertTrue(xmlContent.contains("</Facturas>"));
     }
 
     @Test
-    void testGenerarXMLFactura_ContieneIdFactura() throws Exception {
+    void testExportar_ContieneDatosDeFactura() {
         // Arrange
-        Factura factura = new Factura(
-                "1", "F-123", LocalDate.of(2024, 11, 11),
-                4500.0, 500.0, 5000.0,
-                "Pagada", "Cliente-1", "MetodoPago-1"
-        );
-        when(facturaRepository.findById("1")).thenReturn(Optional.of(factura));
+        Factura factura1 = new Factura("1", "F-123", LocalDate.of(2024, 11, 11),
+                4500.0, 500.0, 5000.0, "Pagada", "Cliente-1", "MetodoPago-1");
+
+        List<Factura> facturas = List.of(factura1);
 
         // Act
-        String xmlResult = xmlGeneratorService.generarXMLFactura("1");
+        byte[] xmlBytes = xmlGeneratorService.exportar(facturas);
+        String xmlContent = new String(xmlBytes);
 
         // Assert
-        assertTrue(xmlResult.contains("<id>1</id>"));
+        assertTrue(xmlContent.contains("<Factura>"));
+        assertTrue(xmlContent.contains("<ID>1</ID>"));
+        assertTrue(xmlContent.contains("<ClienteID>Cliente-1</ClienteID>"));
+        assertTrue(xmlContent.contains("<Subtotal>4500.0</Subtotal>"));
+        assertTrue(xmlContent.contains("<TotalImpuestos>500.0</TotalImpuestos>"));
+        assertTrue(xmlContent.contains("<Total>5000.0</Total>"));
+        assertTrue(xmlContent.contains("</Factura>"));
     }
 
     @Test
-    void testGenerarXMLFactura_ContieneCodigo() throws Exception {
+    void testExportar_MultiplesFacturas() {
         // Arrange
-        Factura factura = new Factura(
-                "1", "F-123", LocalDate.of(2024, 11, 11),
-                4500.0, 500.0, 5000.0,
-                "Pagada", "Cliente-1", "MetodoPago-1"
-        );
-        when(facturaRepository.findById("1")).thenReturn(Optional.of(factura));
+        Factura factura1 = new Factura("1", "F-123", LocalDate.of(2024, 11, 11),
+                4500.0, 500.0, 5000.0, "Pagada", "Cliente-1", "MetodoPago-1");
+        Factura factura2 = new Factura("2", "F-124", LocalDate.of(2024, 11, 12),
+                3000.0, 300.0, 3300.0, "Pendiente", "Cliente-2", "MetodoPago-2");
+
+        List<Factura> facturas = List.of(factura1, factura2);
 
         // Act
-        String xmlResult = xmlGeneratorService.generarXMLFactura("1");
+        byte[] xmlBytes = xmlGeneratorService.exportar(facturas);
+        String xmlContent = new String(xmlBytes);
 
         // Assert
-        assertTrue(xmlResult.contains("<codigo>F-123</codigo>"));
+        assertTrue(xmlContent.contains("<Factura>"));
+        assertTrue(xmlContent.contains("<ID>1</ID>"));
+        assertTrue(xmlContent.contains("<ID>2</ID>"));
+        assertTrue(xmlContent.contains("</Factura>"));
     }
 
     @Test
-    void testGenerarXMLFactura_FacturaNoEncontrada() {
+    void testExportar_ListaVacia() {
         // Arrange
-        when(facturaRepository.findById("2")).thenReturn(Optional.empty());
+        List<Factura> facturas = List.of();
 
-        // Act & Assert
-        Exception exception = assertThrows(Exception.class, () -> xmlGeneratorService.generarXMLFactura("2"));
-        assertEquals("Factura no encontrada", exception.getMessage());
-    }
+        // Act
+        byte[] xmlBytes = xmlGeneratorService.exportar(facturas);
+        String xmlContent = new String(xmlBytes);
 
-    @Test
-    void testObtenerDatosDesdeXML_InvalidXML() {
-        // Arrange
-        String invalidXml = "<Factura><id>1</id><codigo>F-123</codigo>";
-
-        // Act & Assert
-        assertThrows(Exception.class, () -> xmlGeneratorService.obtenerDatosDesdeXML(invalidXml));
+        // Assert
+        assertFalse(xmlContent.contains("<Facturas/>"));
     }
 }
 

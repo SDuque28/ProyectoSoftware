@@ -27,7 +27,15 @@ public class FacturaServiceTest {
         when(facturaRepository.save(factura)).thenReturn(factura);
 
         Factura resultado = facturaService.saveFactura(factura);
-        assertNotNull(resultado);
         assertEquals("F001", resultado.getCodigo());
+    }
+
+    @Test
+    public void testFacturaNotNull() {
+        Factura factura = new Factura();
+        when(facturaRepository.save(factura)).thenReturn(factura);
+
+        Factura resultado = facturaService.saveFactura(factura);
+        assertNotNull(resultado);
     }
 }
