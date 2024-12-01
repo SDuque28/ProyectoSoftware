@@ -1,14 +1,12 @@
 package com.software.MyProyect.controladores;
 
-import com.software.MyProyect.servicios.InformeProductosService;
-import com.software.MyProyect.utils.HttpResponseBuilder;
-
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.software.MyProyect.servicios.InformeProductosService;
+import com.software.MyProyect.utils.HttpResponseBuilder;
 
 @RestController
 @RequestMapping("/api/informes/productos")

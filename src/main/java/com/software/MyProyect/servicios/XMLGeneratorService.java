@@ -9,39 +9,34 @@ import org.springframework.stereotype.Service;
 
 import com.software.MyProyect.modelos.Factura;
 import com.software.MyProyect.repositorios.repositorioFactura;
+import com.software.MyProyect.utils.ExportadorInforme;
+import com.software.MyProyect.utils.XMLBuilder;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
+import java.util.List;
 
 @Service
-public class XMLGeneratorService {
-    
-    @Autowired
-    private repositorioFactura facturaRepository;
+public class XMLGeneratorService implements ExportadorInforme {
 
-    public String generarXMLFactura(String facturaId) throws Exception {
-        Optional<Factura> optionalFactura = facturaRepository.findById(facturaId);
-        if (optionalFactura.isEmpty()) {
-            throw new Exception("Factura no encontrada");
+    @Override
+    public byte[] exportar(List<Factura> facturas) {
+        XMLBuilder xmlBuilder = new XMLBuilder();
+        xmlBuilder.iniciarDocumento("Facturas");
+
+        for (Factura factura : facturas) {
+            xmlBuilder.agregarElemento("Factura")
+                    .agregarSubElemento("ID", factura.getId())
+                    .agregarSubElemento("ClienteID", factura.getIdCliente())
+                    .agregarSubElemento("Subtotal", String.valueOf(factura.getSubtotal()))
+                    .agregarSubElemento("TotalImpuestos", String.valueOf(factura.getTotalImpuestos()))
+                    .agregarSubElemento("Total", String.valueOf(factura.getTotal()))
+                    .cerrarElemento(); 
         }
 
-        Factura factura = optionalFactura.get();
-        JAXBContext context = JAXBContext.newInstance(Factura.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        xmlBuilder.cerrarDocumento();
 
-        StringWriter writer = new StringWriter();
-        marshaller.marshal(factura, writer);
-
-        return writer.toString(); 
-    }
-
-    public Factura obtenerDatosDesdeXML(String xml) throws Exception {
-        JAXBContext context = JAXBContext.newInstance(Factura.class);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-
-        StringReader reader = new StringReader(xml);
-        return (Factura) unmarshaller.unmarshal(reader);
+        return xmlBuilder.obtenerBytes();
     }
 }
