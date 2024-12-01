@@ -1,6 +1,6 @@
 package com.software.MyProyect.servicios;
-import com.software.MyProyect.modelos.Productos;
 import com.software.MyProyect.modelos.CategoriaManager;
+import com.software.MyProyect.modelos.Productos;
 import com.software.MyProyect.repositorios.repositorioProducto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,11 +60,6 @@ public class servicioProducto {
         return resultado;
     }
 
-    public List<Productos> obtenerProductosPorCategoria(String categoria) {
-        List<Productos> productos = productosRepository.findAll();
-        return categoriaManager.filtrarPorCategoria(productos, categoria);
-    }
-
     // Buscar productos por nombre, código o categoría
     public List<Productos> buscarPorCualquierCriterio(String keyword) {
         return productosRepository.findByNombreCodigoOCategoria(keyword);
@@ -90,5 +85,10 @@ public class servicioProducto {
 
         productoExistente.setStock(productoExistente.getStock() + cantidad);
         return productosRepository.save(productoExistente);
+    }
+
+    public List<Productos> obtenerProductosPorCategoria(String categoria) {
+        List<Productos> productos = productosRepository.findAll();
+        return categoriaManager.filtrarPorCategoria(productos, categoria);
     }
 }

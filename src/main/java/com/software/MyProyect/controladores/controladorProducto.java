@@ -75,7 +75,6 @@ public class controladorProducto {
         return productosService.buscarPorCualquierCriterio(keyword);
     }
 
-
     @PutMapping("/{id}/agregar-stock")
     public Productos agregarStock(@PathVariable String id, @RequestParam int cantidad){
         return productosService.agregarStock(id, cantidad);
