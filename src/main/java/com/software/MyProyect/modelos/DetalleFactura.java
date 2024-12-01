@@ -12,6 +12,15 @@ public class DetalleFactura {
     private String idProducto;      // ID of the associated product
     private String idFactura;       // ID of the associated invoice
 
+    public DetalleFactura(String id, String idProducto, String idFactura, double descuento, double valorTotal, int cantidad) {
+        this.id = id;
+        this.idProducto = idProducto;
+        this.idFactura = idFactura;
+        this.descuento = descuento;
+        this.valorTotal = valorTotal;
+        this.cantidad = cantidad;
+    }
+
     // Getters and setters
     public String getId() {
         return id;

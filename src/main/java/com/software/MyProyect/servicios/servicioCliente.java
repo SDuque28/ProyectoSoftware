@@ -23,7 +23,7 @@ public class servicioCliente {
     public List<Clientes> getAllClientes() {
         return clientesRepository.findAll();
     }
-    
+
     public Clientes getClienteById(String id) {
         Optional<Clientes> cliente = clientesRepository.findById(id);
         if (cliente.isPresent()) {
@@ -32,11 +32,11 @@ public class servicioCliente {
             throw new IllegalArgumentException("Cliente con ID " + id + " no encontrado.");
         }
     }
-  
+
     public Clientes updateCliente(String id, Clientes clienteActualizado) {
         Clientes clienteExistente = clientesRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Cliente con ID " + id + " no encontrado."));
-        
+
         // Actualizar los campos del cliente
         clienteExistente.setNombre(clienteActualizado.getNombre());
         clienteExistente.setNumeroDocumento(clienteActualizado.getNumeroDocumento());
@@ -49,11 +49,14 @@ public class servicioCliente {
         return clientesRepository.save(clienteExistente);
     }
 
-    public void deleteCliente(String id) {
+    public boolean deleteCliente(String id) {
+        boolean resultado = false;
         if (!clientesRepository.existsById(id)) {
-            throw new IllegalArgumentException("Cliente con ID " + id + " no encontrado.");
+            System.out.println("Cliente con ID " + id + " no encontrado.");
+        }else {
+            resultado = true;
         }
-        
         clientesRepository.deleteById(id);
+        return resultado;
     }
 }

@@ -8,6 +8,11 @@ public class Categorias {
     private String id;
     private String descripcion;
 
+    public Categorias(String id, String descripcion) {
+        this.id = id;
+        this.descripcion = descripcion;
+    }
+
     // Getters and setters
     public String getId() {
         return id;

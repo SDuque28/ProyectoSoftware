@@ -4,6 +4,8 @@ import com.software.MyProyect.modelos.Productos;
 import com.software.MyProyect.servicios.servicioProducto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.software.MyProyect.servicios.servicioProducto;
+import com.software.MyProyect.modelos.Productos;
 
 import java.util.List;
 
@@ -61,6 +63,16 @@ public class controladorProducto {
     @GetMapping("/buscar/categoria/{categoriaId}")
     public List<Productos> buscarPorCategoria(@PathVariable String categoriaId){
         return productosService.buscarProductosPorCategoria(categoriaId);
+    }
+
+    @GetMapping("/categoria/{categoria}")
+    public List<Productos> obtenerProductosPorCategoria(@PathVariable String categoria) {
+        return productosService.obtenerProductosPorCategoria(categoria);
+    }
+
+    @GetMapping("/buscar")
+    public List<Productos> buscarPorCualquierCriterio(@RequestParam String keyword) {
+        return productosService.buscarPorCualquierCriterio(keyword);
     }
 
     @PutMapping("/{id}/agregar-stock")
