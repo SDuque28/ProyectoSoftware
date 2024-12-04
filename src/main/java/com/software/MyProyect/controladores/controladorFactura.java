@@ -18,6 +18,8 @@ import com.software.MyProyect.servicios.XMLGeneratorService;
 import com.software.MyProyect.servicios.servicioFactura;
 import com.software.MyProyect.utils.ComandoExportacion;
 import com.software.MyProyect.utils.ComandoExportacionXML;
+import com.software.MyProyect.utils.FacturaCollection;
+import com.software.MyProyect.utils.FacturaIterator;
 
 @RestController
 @RequestMapping("/facturas")
@@ -44,14 +46,16 @@ public class controladorFactura {
 
     @GetMapping("/generarExportacion")
     public ResponseEntity<byte[]> generarExportacion(@RequestParam String tipo) {
-        List<Factura> facturas = facturaService.getAllFacturas();
+        FacturaCollection facturaCollection = facturaService.getFacturaCollection();
+        FacturaIterator facturaIterator = facturaCollection.createIterator();
+    
         ComandoExportacion comando = comandosExportacion.get(tipo);
 
         if (comando == null) {
             return ResponseEntity.badRequest().body("Tipo de exportación no soportado".getBytes());
         }
 
-        byte[] datosExportados = comando.ejecutar(facturas);
+        byte[] datosExportados = comando.ejecutar(facturaCollection);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", tipo.equals("xml") ? "application/xml" : "application/json");

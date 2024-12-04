@@ -1,42 +1,45 @@
 package com.software.MyProyect.servicios;
 
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.software.MyProyect.modelos.Factura;
-import com.software.MyProyect.repositorios.repositorioFactura;
-import com.software.MyProyect.utils.ExportadorInforme;
+import com.software.MyProyect.modelos.ProductoFactura;
+import com.software.MyProyect.utils.ExportadorInformeXML;
+import com.software.MyProyect.utils.FacturaCollection;
+import com.software.MyProyect.utils.FacturaIterator;
+import com.software.MyProyect.utils.ProductoIterator;
 import com.software.MyProyect.utils.XMLBuilder;
 
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.Marshaller;
-import jakarta.xml.bind.Unmarshaller;
-import java.util.List;
-
 @Service
-public class XMLGeneratorService implements ExportadorInforme {
+public class XMLGeneratorService implements ExportadorInformeXML {
 
     @Override
-    public byte[] exportar(List<Factura> facturas) {
-        XMLBuilder xmlBuilder = new XMLBuilder();
-        xmlBuilder.iniciarDocumento("Facturas");
+    public byte[] exportar(FacturaCollection facturaCollection) {
+        FacturaIterator facturaIterator = facturaCollection.createIterator();
 
-        for (Factura factura : facturas) {
-            xmlBuilder.agregarElemento("Factura")
-                    .agregarSubElemento("ID", factura.getId())
-                    .agregarSubElemento("ClienteID", factura.getIdCliente())
-                    .agregarSubElemento("Subtotal", String.valueOf(factura.getSubtotal()))
-                    .agregarSubElemento("TotalImpuestos", String.valueOf(factura.getTotalImpuestos()))
-                    .agregarSubElemento("Total", String.valueOf(factura.getTotal()))
-                    .cerrarElemento(); 
+        XMLBuilder builder = new XMLBuilder()
+            .iniciarDocumento("Facturas");
+        
+        while (facturaIterator.hasNext()) {
+            Factura factura = facturaIterator.next();
+            builder.agregarElemento("Factura")
+               .agregarSubElemento("FacturaID", factura.getId())
+               .agregarSubElemento("ClienteID", factura.getIdCliente());
+
+            // Iterar sobre los productos de la factura
+            ProductoIterator productoIterator = new ProductoIterator(factura.getProductosVendidos());
+            while (productoIterator.hasNext()) {
+                ProductoFactura producto = productoIterator.next();
+                builder.agregarElemento("Producto")
+                    .agregarSubElemento("ProductoID", producto.getProductoId())
+                    .agregarSubElemento("Descripcion", producto.getDescripcion())
+                    .cerrarElemento(); // Producto
+            }
+
+            builder.cerrarElemento(); // Factura
         }
 
-        xmlBuilder.cerrarDocumento();
-
-        return xmlBuilder.obtenerBytes();
+        builder.cerrarDocumento();
+        return builder.obtenerBytes();
     }
 }

@@ -3,6 +3,9 @@ import com.software.MyProyect.modelos.Factura;
 import com.software.MyProyect.modelos.ProductoFactura;
 import com.software.MyProyect.modelos.Productos;
 import com.software.MyProyect.repositorios.repositorioFactura;
+import com.software.MyProyect.utils.FacturaCollection;
+import com.software.MyProyect.utils.FacturaCollectionImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,11 @@ public class servicioFactura {
 
     public List<Factura> getAllFacturas() {
         return facturaRepository.findAll();
+    }
+
+    public FacturaCollection getFacturaCollection() {
+        List<Factura> facturas = facturaRepository.findAll();
+        return new FacturaCollectionImpl(facturas);
     }
 
     public void agregarProductosAFactura(Factura factura, List<Productos> productos, List<Integer> cantidades) {
