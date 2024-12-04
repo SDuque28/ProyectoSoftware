@@ -2,12 +2,14 @@ package com.software.MyProyect.servicios;
 
 import com.software.MyProyect.modelos.Factura;
 import com.software.MyProyect.modelos.ProductoFactura;
-import com.software.MyProyect.utils.GeneradorInformeProductos;
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Service
 public class GeneradorInformeProductosImpl implements GeneradorInformeProductos {
 
     private final List<Factura> facturas; // Suponemos que las facturas vienen de un repositorio o similar.

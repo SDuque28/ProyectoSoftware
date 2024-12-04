@@ -49,7 +49,7 @@ public class controladorProducto {
         productosService.deleteProducto(id);
     }
     //Endpoint para buscar producto por nombre
-    @GetMapping("/buscar/nombre/{nombre")
+    @GetMapping("/buscar/nombre/{nombre}")
     public List<Productos> buscarPorNombre(@PathVariable String nombre){
         return productosService.buscarProductosPorNombre(nombre);
     }

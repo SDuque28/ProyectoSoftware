@@ -9,7 +9,7 @@ import com.software.MyProyect.servicios.InformeProductosService;
 import com.software.MyProyect.utils.HttpResponseBuilder;
 
 @RestController
-@RequestMapping("/api/informes/productos")
+@RequestMapping("/informes/productos")
 public class controladorInformeProductos {
 
     private final InformeProductosService informeProductosService;

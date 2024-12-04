@@ -20,7 +20,7 @@ import com.software.MyProyect.utils.ExportadorFactory;
 import com.software.MyProyect.utils.ExportadorInforme;
 
 @RestController
-@RequestMapping("/api/informes")
+@RequestMapping("/informes")
 public class controladorInforme {
 
     @Autowired
@@ -35,17 +35,27 @@ public class controladorInforme {
         try {
             // Filtrar las facturas si se proporciona un mes
             if (mes != null) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
-                LocalDate inicioMes = LocalDate.parse(mes, formatter).withDayOfMonth(1);
-                LocalDate finMes = inicioMes.plusMonths(1).minusDays(1);
+                System.out.println("Valor recibido para 'mes': " + mes);
+                try {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    LocalDate inicioMes = LocalDate.parse(mes.trim(), formatter).withDayOfMonth(1);
+                    LocalDate finMes = inicioMes.plusMonths(1).minusDays(1);
 
-                facturas = facturas.stream()
-                        .filter(f -> {
-                            LocalDate fechaFactura = f.getFecha(); // Asegúrate de que Factura tenga un campo de fecha de tipo LocalDate
-                            return (fechaFactura.isEqual(inicioMes) || fechaFactura.isAfter(inicioMes)) &&
-                                   (fechaFactura.isBefore(finMes) || fechaFactura.isEqual(finMes));
-                        })
-                        .collect(Collectors.toList());
+                    System.out.println("Inicio del mes: " + inicioMes + ", Fin del mes: " + finMes);
+
+                    facturas = facturas.stream()
+                            .filter(f -> {
+                                LocalDate fechaFactura = f.getFecha();
+                                return (fechaFactura.isEqual(inicioMes) || fechaFactura.isAfter(inicioMes)) &&
+                                        (fechaFactura.isBefore(finMes) || fechaFactura.isEqual(finMes));
+                            })
+                            .collect(Collectors.toList());
+                } catch (Exception e) {
+                    e.printStackTrace(); // Registrar la excepción en la consola para más detalles
+                    return ResponseEntity.badRequest()
+                            .header(HttpHeaders.CONTENT_DISPOSITION, "Error al procesar el parámetro 'mes'.")
+                            .body(null);
+                }
             }
 
             // Validar si hay facturas para exportar

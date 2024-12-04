@@ -1,10 +1,12 @@
 package com.software.MyProyect.servicios;
 
 import com.software.MyProyect.utils.ExportadorInformeProductos;
-import com.software.MyProyect.utils.GeneradorInformeProductos;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class InformeProductosService {
     private final GeneradorInformeProductos generadorInformeProductos;
     private final ExportadorInformeProductos exportadorInformeProductos;
